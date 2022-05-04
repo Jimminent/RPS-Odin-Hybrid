@@ -42,11 +42,16 @@ function winnerWinner() {
         winner = "No one";
     }
     roundNumber++;
-    document.getElementById("content").innerText = `You chose ${choice}. I chose ${opponent}. ${winner} won!!!`;
+    if (roundNumber < 5) {
+        document.getElementById("content").innerText = `You chose ${choice}. I chose ${opponent}. ${winner} won!!!`;
+    }
+    else {
+        document.getElementById("content").innerText = `You chose ${choice}. I chose ${opponent}. ${winner} won!!! Good Game! Play again???`;
+    }
 
-    setTimeout(function() {
-        document.getElementById("content").innerText = `You chose ${choice}. I chose ${opponent}. ${winner} won!!! Play again???`
-    }, 3000)
+    // setTimeout(function() {
+    //     document.getElementById("content").innerText = `You chose ${choice}. I chose ${opponent}. ${winner} won!!! Play again???`
+    // }, 3000)
 }
 
 function scoreboardUpdate() {
@@ -57,10 +62,19 @@ function scoreboardUpdate() {
 
 
 function roundWrapUp() {
-    console.log(`Player chose ${choice}.`);
-    aiChoice();
-    winnerWinner();
-    scoreboardUpdate();
+    if (roundNumber <= 5) {
+        console.log(`Player chose ${choice}.`);
+        aiChoice();
+        winnerWinner();
+        scoreboardUpdate();
+    }
+    if (roundNumber == 6) {
+        document.getElementById("content").innerText = `Choose your Weapon!`;
+        roundNumber = 0;
+        aiScore = 0;
+        playerScore = 0;
+        scoreboardUpdate();
+    }
 }
 
 const rockButton = document.querySelector("#rock");
