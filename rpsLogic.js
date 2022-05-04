@@ -3,30 +3,9 @@ var pc = undefined;
 var choice = undefined;
 var opponent = undefined;
 var winner = undefined;
-
-function winnerWinner() {
-    if (ai == 3 && pc == 1) {
-        winner = "You"
-    }
-    else if (ai == 1 && pc == 3) {
-        winner = "I"
-    }
-    else if (ai > pc) {
-        winner = "I"
-    }
-    else if (pc > ai) {
-        winner = "You"
-    }
-    else if (pc == ai) {
-        winner = "No one"
-    }
-    document.getElementById("content").innerText = `You chose ${choice}. I chose ${opponent}. ${winner} won!!!`
-
-    setTimeout(function() {
-        document.getElementById("content").innerText = `You chose ${choice}. I chose ${opponent}. ${winner} won!!! Play again???`
-    }, 3000)
-}
-
+var aiScore = 0;
+var playerScore = 0;
+var roundNumber = 0;
 
 function aiChoice() {
     ai = Math.ceil(Math.random() * 3);
@@ -42,15 +21,55 @@ function aiChoice() {
     console.log(`opponent chose ${opponent}`)
 }
 
+function winnerWinner() {
+    if (ai == 3 && pc == 1) {
+        winner = "You";
+        playerScore++;
+    }
+    else if (ai == 1 && pc == 3) {
+        winner = "I";
+        aiScore++;
+    }
+    else if (ai > pc) {
+        winner = "I";
+        aiScore++;
+    }
+    else if (pc > ai) {
+        winner = "You";
+        playerScore++;
+    }
+    else if (pc == ai) {
+        winner = "No one";
+    }
+    roundNumber++;
+    document.getElementById("content").innerText = `You chose ${choice}. I chose ${opponent}. ${winner} won!!!`;
+
+    setTimeout(function() {
+        document.getElementById("content").innerText = `You chose ${choice}. I chose ${opponent}. ${winner} won!!! Play again???`
+    }, 3000)
+}
+
+function scoreboardUpdate() {
+    document.getElementById("playerScore").innerText = playerScore;
+    document.getElementById("aiScore").innerText = aiScore;
+    document.getElementById("roundNumber").innerText = roundNumber;
+}
+
+
+function roundWrapUp() {
+    console.log(`Player chose ${choice}.`);
+    aiChoice();
+    winnerWinner();
+    scoreboardUpdate();
+}
+
 const rockButton = document.querySelector("#rock");
 
 rockButton.addEventListener("click", (e) => {
     e.preventDefault();
     pc = 1;
     choice = "rock";
-    console.log(`Player chose ${choice}.`);
-    aiChoice();
-    winnerWinner();
+    roundWrapUp();
 })
 
 const paperButton = document.querySelector("#paper");
@@ -59,9 +78,7 @@ paperButton.addEventListener("click", (e) => {
     e.preventDefault();
     pc = 2;
     choice = "paper";
-    console.log(`Player chose ${choice}.`);
-    aiChoice();
-    winnerWinner();
+    roundWrapUp();
 })
 
 const scissorsButton = document.querySelector("#scissors");
@@ -70,9 +87,7 @@ scissorsButton.addEventListener("click", (e) => {
     e.preventDefault();
     pc = 3;
     choice = "scissors";
-    console.log(`Player chose ${choice}.`);
-    aiChoice();
-    winnerWinner();
+    roundWrapUp();
 })
 
 
