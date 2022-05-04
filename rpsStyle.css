@@ -22,6 +22,8 @@ body {
 }
 #sidebar {
     flex-basis: 20%;
+    display: flex;
+    flex-direction: column;
     background-color: rgba(0, 0, 0, 0.7);
     border-right: 2px solid black;
     padding: 20px;
@@ -31,6 +33,11 @@ body {
     padding: 20%;
     text-align: center;
     font-size: 36px;
+}
+
+#scoreboard {
+    display: flex;
+    justify-content: space-evenly;
 }
 /* button {
     background-color: #aaa;
